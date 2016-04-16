@@ -1,5 +1,5 @@
 ﻿  Movement controls
-    WASD movement
+X   WASD movement
     mouse target
     cursor
     orientation
