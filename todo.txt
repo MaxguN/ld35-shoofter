@@ -1,11 +1,11 @@
 ﻿  Movement controls
 X   WASD movement
-    mouse target
+    >mouse target<
     cursor
     orientation
   Shoot controls
     weapon type
-    projectile generation
+    >projectile generation<
     colliders
     damages
   Ennemies
@@ -13,8 +13,8 @@ X   WASD movement
     spawn
     AI
   Models
-\   mecha / tank / ship
-\   animations
+X   mecha / tank / ship
+X   animations
     shapeshift
   Sounds (mouth-made)
     shooting x3
