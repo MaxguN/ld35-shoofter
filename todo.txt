@@ -1,6 +1,6 @@
 ﻿  Movement controls
 X   WASD movement
-    >mouse target<
+X    mouse target<
     cursor
     orientation
   Shoot controls

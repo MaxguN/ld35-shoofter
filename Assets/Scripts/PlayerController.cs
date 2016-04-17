@@ -20,14 +20,15 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        bool shoot = Input.GetButton("Fire1");
 	}
 
     void FixedUpdate() {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
+		bool fire = Input.GetButton("Fire1");
 
-        m_rigidbody.velocity = (new Vector3(x, 0, z)) * m_speed;
+		m_rigidbody.velocity = (new Vector3(x, 0, z)) * m_speed;
+		m_currentVehicle.GetComponent<Weapon>().Shoot(fire);
     }
 
     void Shift(Transform newVehicle) {
