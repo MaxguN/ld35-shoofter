@@ -1,37 +1,29 @@
 fileFormatVersion: 2
-guid: 4418e809f2d6bc84a81f460beadf8099
-timeCreated: 1460894101
+guid: e4d6365eaebe575479e5a59977894a6d
+timeCreated: 1460928629
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Cube
-    100002: Cube.001
-    100004: Cube.002
-    100006: Cylinder
-    100008: Cylinder.001
+    100000: Base
+    100002: Cannon
+    100004: Cannon_end
+    100006: Corps
+    100008: Tank
     100010: //RootNode
-    400000: Cube
-    400002: Cube.001
-    400004: Cube.002
-    400006: Cylinder
-    400008: Cylinder.001
+    100012: Turret
+    400000: Base
+    400002: Cannon
+    400004: Cannon_end
+    400006: Corps
+    400008: Tank
     400010: //RootNode
-    2300000: Cube
-    2300002: Cube.001
-    2300004: Cube.002
-    2300006: Cylinder
-    2300008: Cylinder.001
-    3300000: Cube
-    3300002: Cube.001
-    3300004: Cube.002
-    3300006: Cylinder
-    3300008: Cylinder.001
-    4300000: Cylinder.001
-    4300002: Cylinder
-    4300004: Cube.002
-    4300006: Cube.001
-    4300008: Cube
+    400012: Turret
+    4300000: Turret
+    4300002: Base
+    9500000: //RootNode
+    13700000: Base
+    13700002: Turret
   materials:
     importMaterials: 1
     materialName: 0
@@ -90,7 +82,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

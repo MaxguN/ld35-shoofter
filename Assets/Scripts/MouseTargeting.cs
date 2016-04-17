@@ -8,29 +8,30 @@ public class MouseTargeting : MonoBehaviour {
 	private int groundLaserLayer = 1 << 8;
 	private int airLaserLayer = 1 << 9;
 
+	private int currentLayer;
+	private float height;
+
 	// Use this for initialization
 	void Start() {
 		Cursor.SetCursor(m_cursor, Vector2.zero, CursorMode.Auto);
 		//Cursor.visible = false;
+		GroundControl();
 	}
 
 	// Update is called once per frame
 	void Update() {
 		RaycastHit hit;
-		Vector3 cursorPosition = Input.mousePosition;
-		cursorPosition.z = 65f;
-
 		Vector3 playerPosition = transform.localPosition;
 		Vector3 targetPosition = Vector3.zero;
-		Ray cursorRay = Camera.main.ScreenPointToRay(cursorPosition);
+		Ray cursorRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-		if (Physics.Raycast(cursorRay, out hit, Mathf.Infinity, groundLaserLayer)) {
+		if (Physics.Raycast(cursorRay, out hit, Mathf.Infinity, currentLayer)) {
 			targetPosition = hit.point;
-			targetPosition.x += 1.5f;
-			targetPosition.z -= 3f;
+			//targetPosition.x += 1.5f;
+			//targetPosition.z -= 3f;
 		}
 
-		playerPosition.y = 6f;
+		playerPosition.y = height;
 
 		Vector3 direction = targetPosition - playerPosition;
 		direction.Normalize();
@@ -42,5 +43,15 @@ public class MouseTargeting : MonoBehaviour {
 		if (Physics.Raycast(playerPosition, direction, out hit)) {
 			m_laser.SetPosition(1, hit.point);
 		}
+	}
+
+	public void GroundControl() {
+		currentLayer = groundLaserLayer;
+		height = 6f;
+	}
+
+	public void AirControl() {
+		currentLayer = airLaserLayer;
+		height = 18.5f;
 	}
 }

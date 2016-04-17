@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         m_rigidbody = GetComponent<Rigidbody>();
 
-        Shift(m_mecha);
+		Shift(m_mecha);
 	}
 	
 	// Update is called once per frame
@@ -33,6 +33,14 @@ public class PlayerController : MonoBehaviour {
 
     void Shift(Transform newVehicle) {
         m_currentVehicle = newVehicle;
+
+		if (newVehicle == m_ship) {
+			GetComponent<MouseTargeting>().AirControl();
+			Camera.main.GetComponent<CameraTracking>().AirTrack();
+		} else {
+			GetComponent<MouseTargeting>().GroundControl();
+			Camera.main.GetComponent<CameraTracking>().GroundTrack();
+		}
 
         // ToDo : shift animation
     }

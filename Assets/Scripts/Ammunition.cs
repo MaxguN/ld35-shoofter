@@ -20,6 +20,10 @@ public class Ammunition : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		Health health = other.GetComponent<Health>();
 
+		if (other.tag == "Player") {
+			return;
+		}
+
 		if (health) {
 			health.Hit(m_damage);
 		}

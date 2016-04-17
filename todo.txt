@@ -1,28 +1,28 @@
-﻿  Movement controls
-X   WASD movement
-X    mouse target<
-    cursor
-    orientation
-  Shoot controls
-    weapon type
-    >projectile generation<
-    colliders
-    damages
-  Ennemies
-    models
-    spawn
-    AI
-  Models
-X   mecha / tank / ship
-X   animations
-    shapeshift
-  Sounds (mouth-made)
-    shooting x3
-    moving x3
-    explosions
-    background music
-  UI
-    titlescreen
-    shapeshift (cooldown)
-    score
-    pause
+﻿   Movement controls
+X    WASD movement
+X    mouse target
+X    cursor
+     orientation
+X  Shoot controls
+X    weapon type
+X    projectile generation
+X    colliders
+X    damages
+   Ennemies
+     models
+     spawn
+     AI
+   Models
+X    mecha / tank / ship
+X    animations
+     shapeshift
+   Sounds (mouth-made)
+     shooting x3
+     moving x3
+     explosions
+     background music
+   UI
+     titlescreen
+     shapeshift (cooldown)
+     score
+     pause
