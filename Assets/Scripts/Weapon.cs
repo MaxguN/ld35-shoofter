@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 
 	public void Shoot(bool fire) {
@@ -26,7 +26,13 @@ public class Weapon : MonoBehaviour {
 		}
 	}
 
-	public void Shoot(Vector3 target) {
+	public void Shoot(bool fire, Vector3 direction) {
+		if (fire) {
+			Shoot(direction);
+		}
+	}
+
+	public void Shoot(Vector3 direction) {
 		if (m_timer >= m_cooldown) {
 			m_timer = 0f;
 
@@ -36,6 +42,8 @@ public class Weapon : MonoBehaviour {
 				ammo.localPosition = Vector3.zero;
 
 				ammo.parent = null;
+				ammo.rotation = Quaternion.LookRotation(direction);
+				ammo.GetComponent<Ammunition>().SetVelocity(direction);
 			}
 		}
 

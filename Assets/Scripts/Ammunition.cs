@@ -11,7 +11,7 @@ public class Ammunition : MonoBehaviour {
 	private float m_duration = 0f;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		m_rigidbody = GetComponent<Rigidbody>();
 		m_rigidbody.velocity = new Vector3(0, 0, m_velocity);
 	}
@@ -26,16 +26,21 @@ public class Ammunition : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		Health health = other.GetComponent<Health>();
-
-		if (other.tag == m_originTag) {
+		if (other.tag == m_originTag || other.tag == "LaserPlane") {
 			return;
 		}
+
+		Health health = other.GetComponent<Health>();
 
 		if (health) {
 			health.Hit(m_damage);
 		}
 
 		Destroy(gameObject);
+	}
+
+	public void SetVelocity(Vector3 direction) {
+		direction.Normalize();
+		m_rigidbody.velocity = direction * m_velocity;
 	}
 }

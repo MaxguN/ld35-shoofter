@@ -41,7 +41,14 @@ public class EnnemyAI : MonoBehaviour {
 	}
 
 	void Shoot() {
-		Vector3 direction = transform.localPosition - m_target.localPosition;
+		Vector3 target = m_target.localPosition;
+		if (m_target.GetComponent<PlayerController>().GetVehicleType() == "Ground") {
+			target.y = 6f;
+		} else {
+			target.y = 20f;
+		}
+
+		Vector3 direction = transform.localPosition - target;
 		direction.Normalize();
 
 		GetComponent<Weapon>().Shoot(direction);

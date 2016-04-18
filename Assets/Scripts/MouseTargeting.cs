@@ -11,11 +11,14 @@ public class MouseTargeting : MonoBehaviour {
 	private int currentLayer;
 	private float height;
 
+	private Vector3 m_currentDirection;
+
 	// Use this for initialization
 	void Start() {
 		Cursor.SetCursor(m_cursor, Vector2.zero, CursorMode.Auto);
 		//Cursor.visible = false;
 		GroundControl();
+		m_currentDirection = Vector3.forward;
 	}
 
 	// Update is called once per frame
@@ -33,14 +36,14 @@ public class MouseTargeting : MonoBehaviour {
 
 		playerPosition.y = height;
 
-		Vector3 direction = targetPosition - playerPosition;
-		direction.Normalize();
+		m_currentDirection = targetPosition - playerPosition;
+		m_currentDirection.Normalize();
 		//Debug.Log(targetPosition + " - " + playerPosition + " = " + direction);
 
 		m_laser.SetPosition(0, playerPosition);
 
 
-		if (Physics.Raycast(playerPosition, direction, out hit)) {
+		if (Physics.Raycast(playerPosition, m_currentDirection, out hit)) {
 			m_laser.SetPosition(1, hit.point);
 		}
 	}
@@ -53,5 +56,9 @@ public class MouseTargeting : MonoBehaviour {
 	public void AirControl() {
 		currentLayer = airLaserLayer;
 		height = 18.5f;
+	}
+
+	public Vector3 GetDirection() {
+		return m_currentDirection;
 	}
 }
