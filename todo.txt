@@ -17,9 +17,9 @@ X    mecha / tank / ship
 X    animations
      shapeshift
    Sounds (mouth-made)
-     shooting x3
-     moving x3
-     explosions
+X    shooting x3
+X    moving x3
+X    explosions
      background music
    UI
      titlescreen
