@@ -32,7 +32,13 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Shift(Transform newVehicle) {
-        m_currentVehicle = newVehicle;
+		if (m_currentVehicle) {
+			Destroy(m_currentVehicle.gameObject);
+		}
+
+		m_currentVehicle = (Transform) Instantiate(newVehicle);
+		m_currentVehicle.parent = transform;
+		m_currentVehicle.localPosition = Vector3.zero;
 
 		if (newVehicle == m_ship) {
 			GetComponent<MouseTargeting>().AirControl();

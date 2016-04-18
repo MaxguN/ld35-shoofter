@@ -22,16 +22,20 @@ public class Weapon : MonoBehaviour {
 
 	public void Shoot(bool fire) {
 		if (fire) {
-			if (m_timer >= m_cooldown) {
-				m_timer = 0f;
+			Shoot(new Vector3(0, 0, 1f));
+		}
+	}
 
-				foreach (Transform weapon in m_weapons) {
-					Transform ammo = (Transform) Instantiate(m_ammunition);
-					ammo.parent = GameObject.Find(weapon.name).transform;
-					ammo.localPosition = Vector3.zero;
+	public void Shoot(Vector3 target) {
+		if (m_timer >= m_cooldown) {
+			m_timer = 0f;
 
-					ammo.parent = null;
-				}
+			foreach (Transform weapon in m_weapons) {
+				Transform ammo = (Transform)Instantiate(m_ammunition);
+				ammo.parent = weapon;
+				ammo.localPosition = Vector3.zero;
+
+				ammo.parent = null;
 			}
 		}
 

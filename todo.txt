@@ -8,10 +8,10 @@ X    weapon type
 X    projectile generation
 X    colliders
 X    damages
-   Ennemies
-     models
-     spawn
-     AI
+X  Ennemies
+X    models
+X    spawn
+X    AI
    Models
 X    mecha / tank / ship
 X    animations

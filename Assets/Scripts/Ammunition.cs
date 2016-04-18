@@ -4,8 +4,11 @@ using System.Collections;
 public class Ammunition : MonoBehaviour {
 	public float m_damage = 50f;
 	public float m_velocity = 50f;
+	public float m_lifetime = 30f;
+	public string m_originTag;
 
 	private Rigidbody m_rigidbody;
+	private float m_duration = 0f;
 
 	// Use this for initialization
 	void Start () {
@@ -14,13 +17,18 @@ public class Ammunition : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
+		m_duration += Time.deltaTime;
+
+		if (m_duration >= m_lifetime) {
+			Destroy(gameObject);
+		}
 	}
 
 	void OnTriggerEnter(Collider other) {
 		Health health = other.GetComponent<Health>();
 
-		if (other.tag == "Player") {
+		if (other.tag == m_originTag) {
 			return;
 		}
 
