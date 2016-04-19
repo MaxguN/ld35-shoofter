@@ -9,7 +9,7 @@ X    integration
      background music
    UI
      titlescreen
-\    shapeshift (cooldown)
-     score
-     lifepoints
+X    shapeshift (cooldown)
+X    score
+X    lifepoints
      pause
