@@ -6,6 +6,7 @@ public class Ammunition : MonoBehaviour {
 	public float m_velocity = 50f;
 	public float m_lifetime = 30f;
 	public string m_originTag;
+	public AudioClip m_explosionSound;
 
 	private Rigidbody m_rigidbody;
 	private float m_duration = 0f;
@@ -34,6 +35,10 @@ public class Ammunition : MonoBehaviour {
 
 		if (health) {
 			health.Hit(m_damage);
+		}
+
+		if (m_explosionSound) {
+			AudioSource.PlayClipAtPoint(m_explosionSound, Camera.main.transform.position + new Vector3(0, 0, 10));
 		}
 
 		Destroy(gameObject);

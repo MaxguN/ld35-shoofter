@@ -9,17 +9,31 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody m_rigidbody;
     private Transform m_currentVehicle;
+	private AudioSource m_source;
+	private UserInterface m_ui;
 
-    private float m_speed = 50f;
+	private float m_speed = 50f;
 	private float m_mechaTimer = 0f;
 	private float m_shipTimer = 0f;
 	private float m_tankTimer = 0f;
 
+	private float m_mechaHP = 0f;
+	private float m_shipHP = 0f;
+	private float m_tankHP = 0f;
+
+	private int m_score = 0;
+
 	// Use this for initialization
 	void Start () {
         m_rigidbody = GetComponent<Rigidbody>();
+		m_source = GetComponent<AudioSource>();
+		m_ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UserInterface>();
 
-		Shift(m_mecha);
+		m_mechaHP = m_mecha.GetComponent<Health>().m_healthPoints;
+		m_shipHP = m_ship.GetComponent<Health>().m_healthPoints;
+		m_tankHP = m_tank.GetComponent<Health>().m_healthPoints;
+
+		Shift(m_mecha, m_mechaHP);
 	}
 	
 	// Update is called once per frame
@@ -30,12 +44,15 @@ public class PlayerController : MonoBehaviour {
 
 		if (m_mechaTimer > 0f) {
 			m_mechaTimer -= Time.deltaTime;
+			m_ui.SetMechaCooldown(m_mechaTimer);
 		}
 		if (m_shipTimer > 0f) {
 			m_shipTimer -= Time.deltaTime;
+			m_ui.SetShipCooldown(m_shipTimer);
 		}
 		if (m_tankTimer > 0f) {
 			m_tankTimer -= Time.deltaTime;
+			m_ui.SetTankCooldown(m_tankTimer);
 		}
 
 		if (shiftMecha) {
@@ -45,6 +62,8 @@ public class PlayerController : MonoBehaviour {
 		} else if (shiftTank) {
 			ShiftToTank();
 		}
+
+		m_ui.SetScore(m_score);
 	}
 
     void FixedUpdate() {
@@ -53,17 +72,33 @@ public class PlayerController : MonoBehaviour {
 		bool fire = Input.GetButton("Fire1");
 
 		m_rigidbody.velocity = (new Vector3(x, 0, z)) * m_speed;
+		
+		if (x != 0f || z != 0f) {
+			Move();
+		} else {
+			Stop();
+		}
+
 		m_currentVehicle.GetComponent<Weapon>().Shoot(fire, GetComponent<MouseTargeting>().GetDirection());
     }
 
-    void Shift(Transform newVehicle) {
+    void Shift(Transform newVehicle, float health) {
 		if (m_currentVehicle) {
+			if (m_currentVehicle.name.Contains("mecha")) {
+				m_mechaHP = m_currentVehicle.GetComponent<Health>().GetHealth();
+			} else if (m_currentVehicle.name.Contains("ship")) {
+				m_shipHP = m_currentVehicle.GetComponent<Health>().GetHealth();
+			} else if (m_currentVehicle.name.Contains("tank")) {
+				m_tankHP = m_currentVehicle.GetComponent<Health>().GetHealth();
+			}
+
 			Destroy(m_currentVehicle.gameObject);
 		}
 
 		m_currentVehicle = (Transform) Instantiate(newVehicle);
 		m_currentVehicle.parent = transform;
 		m_currentVehicle.localPosition = new Vector3(0, m_currentVehicle.localPosition.y, 0);
+		m_currentVehicle.GetComponent<Health>().SetHealth(health);
 
 		if (newVehicle == m_ship) {
 			GetComponent<MouseTargeting>().AirControl();
@@ -80,7 +115,7 @@ public class PlayerController : MonoBehaviour {
 		if (!m_currentVehicle.name.Contains(m_mecha.name) && m_mechaTimer <= 0f) {
 			m_mechaTimer = m_shiftCooldown;
 
-			Shift(m_mecha);
+			Shift(m_mecha, m_mechaHP);
 		}
 	}
 
@@ -88,7 +123,7 @@ public class PlayerController : MonoBehaviour {
 		if (!m_currentVehicle.name.Contains(m_ship.name) && m_shipTimer <= 0f) {
 			m_shipTimer = m_shiftCooldown;
 
-			Shift(m_ship);
+			Shift(m_ship, m_shipHP);
 		}
 	}
 
@@ -96,7 +131,7 @@ public class PlayerController : MonoBehaviour {
 		if (!m_currentVehicle.name.Contains(m_tank.name) && m_tankTimer <= 0f) {
 			m_tankTimer = m_shiftCooldown;
 
-			Shift(m_tank);
+			Shift(m_tank, m_tankHP);
 		}
 	}
 
@@ -106,5 +141,23 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		return "Ground";
+	}
+
+	void Move() {
+		if (m_source && !m_source.isPlaying) {
+			m_source.clip = m_currentVehicle.GetComponent<Vehicle>().m_moveSound;
+			m_source.Play();
+			m_source.loop = true;
+		}
+	}
+
+	void Stop() {
+		if (m_source && m_source.isPlaying) {
+			m_source.Stop();
+		}
+	}
+
+	public void AddScore(int score) {
+		m_score += score;
 	}
 }

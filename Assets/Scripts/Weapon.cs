@@ -4,15 +4,18 @@ using System.Collections;
 public class Weapon : MonoBehaviour {
 	public Transform[] m_weapons;
 	public Transform m_ammunition;
+	public AudioClip m_shootSound;
 	public float m_cooldown = 1f;
 
 	private float m_timer = 0f;
+	private AudioSource m_source;
 
 	// Use this for initialization
 	void Start () {
-		//foreach (GameObject weapon in GameObject.FindGameObjectsWithTag("Weapon")) {
-		//	m_weapons[m_weapons.Length] = weapon.transform;
-		//}
+		m_source = GetComponent<AudioSource>();
+		if (m_shootSound) {
+			m_source.clip = m_shootSound;
+		}
 	}
 	
 	// Update is called once per frame
@@ -44,6 +47,10 @@ public class Weapon : MonoBehaviour {
 				ammo.parent = null;
 				ammo.rotation = Quaternion.LookRotation(direction);
 				ammo.GetComponent<Ammunition>().SetVelocity(direction);
+			}
+
+			if (m_shootSound) {
+				m_source.Play();
 			}
 		}
 
