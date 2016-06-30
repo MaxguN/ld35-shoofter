@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
 	private UserInterface m_ui;
 
 	private float m_speed = 50f;
+	private float m_rotateSpeed = 2f;
 	private float m_mechaTimer = 0f;
 	private float m_shipTimer = 0f;
 	private float m_tankTimer = 0f;
@@ -71,7 +72,29 @@ public class PlayerController : MonoBehaviour {
         float z = Input.GetAxis("Vertical");
 		bool fire = Input.GetButton("Fire1");
 
-		m_rigidbody.velocity = (new Vector3(x, 0, z)) * m_speed;
+		if (GameObject.FindGameObjectWithTag("Player")) {
+			Vehicle vehicle = GameObject.FindGameObjectWithTag("Player").GetComponent<Vehicle>();
+
+			if (vehicle) {
+				switch (vehicle.m_vehicle) {
+					case Vehicle.VehicleType.Mech:
+						m_rigidbody.velocity = vehicle.m_rotation * new Vector3(x, 0, z) * m_speed;
+						Animator animator = vehicle.GetComponent<Animator>();
+						animator.SetBool("Move", x > 0.1f || x < -0.1f || z > 0.1f || z < -0.1f);
+						break;
+					case Vehicle.VehicleType.Ship:
+						m_rigidbody.velocity = vehicle.m_rotation * new Vector3(x, 0, z) * m_speed;
+						vehicle.Lean((int) x);
+						break;
+					case Vehicle.VehicleType.Tank:
+						transform.localEulerAngles += new Vector3(0, x, 0) * m_rotateSpeed;
+						m_rigidbody.velocity = vehicle.transform.rotation * new Vector3(0, 0, -z) * m_speed;
+						break;
+				}
+			}
+		}
+
+
 		
 		if (x != 0f || z != 0f) {
 			Move();

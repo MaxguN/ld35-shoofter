@@ -38,6 +38,10 @@ public class MouseTargeting : MonoBehaviour {
 
 		m_currentDirection = targetPosition - playerPosition;
 		m_currentDirection.Normalize();
+
+		if (GameObject.FindGameObjectWithTag("Player") && GameObject.FindGameObjectWithTag("Player").GetComponent<Vehicle>()) {
+			GameObject.FindGameObjectWithTag("Player").GetComponent<Vehicle>().SetOrientation(m_currentDirection);
+		}
 		//Debug.Log(targetPosition + " - " + playerPosition + " = " + direction);
 
 		m_laser.SetPosition(0, playerPosition);
