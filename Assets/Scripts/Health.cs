@@ -20,20 +20,22 @@ public class Health : MonoBehaviour {
 	}
 
 	public void Hit(float damage) {
-		m_currentHP -= damage;
+		if (m_currentHP > 0f) {
+			m_currentHP -= damage;
 
-		if (m_currentHP <= 0f) {
-			if (m_destroyed) {
-				AudioSource.PlayClipAtPoint(m_destroyed, Camera.main.transform.position + new Vector3(0, 0, 5));
+			if (m_currentHP <= 0f) {
+				if (m_destroyed) {
+					AudioSource.PlayClipAtPoint(m_destroyed, Camera.main.transform.position + new Vector3(0, 0, 5));
+				}
+
+				if (tag == "Ennemy") {
+					GameObject.FindGameObjectWithTag("PlayerPosition").GetComponent<PlayerController>().AddScore((int)(m_healthPoints * Random.Range(1f, 1.5f)));
+					Destroy(gameObject);
+				} else if (tag == "Player") {
+					GameObject.FindGameObjectWithTag("PlayerPosition").GetComponent<PlayerController>().AddScore((int) m_healthPoints * (-10));
+					GameObject.FindGameObjectWithTag("PlayerPosition").GetComponent<PlayerController>().ShiftToNext();
+				}
 			}
-
-			if (tag == "Ennemy") {
-				GameObject.FindGameObjectWithTag("PlayerPosition").GetComponent<PlayerController>().AddScore((int)(m_healthPoints * Random.Range(1f, 1.5f)));
-			} else if (tag == "Player") {
-				GameObject.FindGameObjectWithTag("PlayerPosition").GetComponent<PlayerController>().AddScore((int) m_healthPoints * (-1000));
-			}
-
-			Destroy(gameObject);
 		}
 	}
 

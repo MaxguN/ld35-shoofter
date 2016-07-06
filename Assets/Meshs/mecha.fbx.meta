@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 5d63d8fde6fe34e42a6c3955400cf5da
-timeCreated: 1460851259
+guid: e5571885d34a8654a9b46c16229933cc
+timeCreated: 1467835078
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -33,7 +33,17 @@ ModelImporter:
     400024: Tronc
     4300000: Articulations
     4300002: Membres
-    7400000: Squelette|Walk
+    7400000: Squelette|ArticulationsAction
+    7400002: Squelette|Idle
+    7400004: Squelette|MembresAction
+    7400006: Squelette|Shapeshift
+    7400008: Squelette|Walk
+    7400010: Articulations|ArticulationsAction
+    7400012: Articulations|MembresAction
+    7400014: Articulations|Shapeshift
+    7400016: Membres|ArticulationsAction
+    7400018: Membres|MembresAction
+    7400020: Membres|Shapeshift
     9500000: //RootNode
     13700000: Articulations
     13700002: Membres
@@ -58,6 +68,114 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations:
+    - serializedVersion: 16
+      name: Squelette|Idle
+      takeName: Squelette|Idle
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Articulations
+        weight: 1
+      - path: Membres
+        weight: 1
+      - path: Squelette
+        weight: 1
+      - path: Squelette/Tronc
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_D
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_D/Mollet_D
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_D/Mollet_D/Pied_D
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_D/Mollet_D/Pied_D/Pied_D_end
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_G
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_G/Mollet_G
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_G/Mollet_G/Pied_G
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_G/Mollet_G/Pied_G/Pied_G_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Squelette|Shapeshift
+      takeName: Squelette|Shapeshift
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Articulations
+        weight: 1
+      - path: Membres
+        weight: 1
+      - path: Squelette
+        weight: 1
+      - path: Squelette/Tronc
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_D
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_D/Mollet_D
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_D/Mollet_D/Pied_D
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_D/Mollet_D/Pied_D/Pied_D_end
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_G
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_G/Mollet_G
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_G/Mollet_G/Pied_G
+        weight: 1
+      - path: Squelette/Tronc/Cuisse_G/Mollet_G/Pied_G/Pied_G_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Squelette|Walk
       takeName: Squelette|Walk

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
@@ -106,6 +107,10 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Shift(Transform newVehicle, float health) {
+		StartCoroutine(TimedShift(newVehicle, health));
+	}
+
+	IEnumerator TimedShift(Transform newVehicle, float health) {
 		if (m_currentVehicle) {
 			if (m_currentVehicle.name.Contains("mecha")) {
 				m_mechaHP = m_currentVehicle.GetComponent<Health>().GetHealth();
@@ -115,10 +120,17 @@ public class PlayerController : MonoBehaviour {
 				m_tankHP = m_currentVehicle.GetComponent<Health>().GetHealth();
 			}
 
+			Animator animator = m_currentVehicle.GetComponent<Animator>();
+			if (animator) {
+				animator.SetTrigger("Shapeshift");
+				yield return new WaitForSeconds(1);
+			}
+
+
 			Destroy(m_currentVehicle.gameObject);
 		}
 
-		m_currentVehicle = (Transform) Instantiate(newVehicle);
+		m_currentVehicle = (Transform)Instantiate(newVehicle);
 		m_currentVehicle.parent = transform;
 		m_currentVehicle.localPosition = new Vector3(0, m_currentVehicle.localPosition.y, 0);
 		m_currentVehicle.GetComponent<Health>().SetHealth(health);
@@ -134,27 +146,54 @@ public class PlayerController : MonoBehaviour {
 		// ToDo : shift animation
 	}
 
-	void ShiftToMecha() {
-		if (!m_currentVehicle.name.Contains(m_mecha.name) && m_mechaTimer <= 0f) {
+	bool ShiftToMecha() {
+		if (!m_currentVehicle.name.Contains(m_mecha.name) && m_mechaTimer <= 0f && m_mechaHP > 0) {
 			m_mechaTimer = m_shiftCooldown;
 
 			Shift(m_mecha, m_mechaHP);
+
+			return true;
 		}
+		return false;
 	}
 
-	void ShiftToShip() {
-		if (!m_currentVehicle.name.Contains(m_ship.name) && m_shipTimer <= 0f) {
+	bool ShiftToShip() {
+		if (!m_currentVehicle.name.Contains(m_ship.name) && m_shipTimer <= 0f && m_shipHP > 0) {
 			m_shipTimer = m_shiftCooldown;
 
 			Shift(m_ship, m_shipHP);
+
+			return true;
 		}
+		return false;
 	}
 
-	void ShiftToTank() {
-		if (!m_currentVehicle.name.Contains(m_tank.name) && m_tankTimer <= 0f) {
+	bool ShiftToTank() {
+		if (!m_currentVehicle.name.Contains(m_tank.name) && m_tankTimer <= 0f && m_tankHP > 0) {
 			m_tankTimer = m_shiftCooldown;
 
 			Shift(m_tank, m_tankHP);
+
+			return true;
+		}
+		return false;
+	}
+
+	public void ShiftToNext() {
+		string vehicle = m_currentVehicle.name;
+
+		if (vehicle.Contains("mecha")) {
+			if (!ShiftToShip() && !ShiftToTank()) {
+				Lose();
+			}
+		} else if(vehicle.Contains("ship")) {
+			if (!ShiftToTank() && !ShiftToMecha()) {
+				Lose();
+			}
+		} else if (vehicle.Contains("tank")) {
+			if (!ShiftToMecha() && !ShiftToShip()) {
+				Lose();
+			}
 		}
 	}
 
@@ -182,5 +221,13 @@ public class PlayerController : MonoBehaviour {
 
 	public void AddScore(int score) {
 		m_score += score;
+	}
+
+	void Win() {
+		SceneManager.LoadScene("endgame");
+	}
+
+	void Lose() {
+		SceneManager.LoadScene("endgame");
 	}
 }
