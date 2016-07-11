@@ -72,7 +72,7 @@ public class Vehicle : MonoBehaviour {
 				break;
 			case VehicleType.Ship:
 				transform.rotation = m_rotation;
-				transform.localEulerAngles += new Vector3(-90, -180, 0);
+				transform.localEulerAngles += new Vector3(0, 180, 0);
 				break;
 			case VehicleType.Tank:
 				GameObject.FindGameObjectWithTag("Turret").transform.rotation = m_rotation;

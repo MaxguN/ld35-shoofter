@@ -1,15 +1,48 @@
 fileFormatVersion: 2
-guid: 9ecf52e05c48b984d86aa03aaf8160df
-timeCreated: 1460896339
+guid: 4d7ecec62d65d684aad704e183285f31
+timeCreated: 1468270521
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
+    100000: Armature
+    100002: base
+    100004: baserear
+    100006: front
+    100008: lefttip
+    100010: lefttip_end
+    100012: leftwing
+    100014: nose
+    100016: nose_end
+    100018: reactor
+    100020: reactor_end
+    100022: rear
+    100024: righttip
+    100026: righttip_end
+    100028: rightwing
+    100030: Ship
+    100032: //RootNode
+    400000: Armature
+    400002: base
+    400004: baserear
+    400006: front
+    400008: lefttip
+    400010: lefttip_end
+    400012: leftwing
+    400014: nose
+    400016: nose_end
+    400018: reactor
+    400020: reactor_end
+    400022: rear
+    400024: righttip
+    400026: righttip_end
+    400028: rightwing
+    400030: Ship
+    400032: //RootNode
     4300000: Ship
+    7400000: Armature|Shapeshift
+    9500000: //RootNode
+    13700000: Ship
   materials:
     importMaterials: 1
     materialName: 0
@@ -68,7 +101,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

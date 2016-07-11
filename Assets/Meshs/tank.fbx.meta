@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e4d6365eaebe575479e5a59977894a6d
-timeCreated: 1460928629
+guid: f4955c6825f87a54e9d7d0058fc9aa80
+timeCreated: 1468267952
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,18 +9,55 @@ ModelImporter:
     100002: Cannon
     100004: Cannon_end
     100006: Corps
-    100008: Tank
-    100010: //RootNode
-    100012: Turret
+    100008: Corps.003
+    100010: Corps.005
+    100012: Corps.010
+    100014: Corps.012
+    100016: Left Track
+    100018: LeftTrackFront
+    100020: LeftTrackFront_end
+    100022: LeftTrackLever
+    100024: LeftTrackRear
+    100026: LeftTrackRear_end
+    100028: Right Track
+    100030: RightTrackFront
+    100032: RightTrackFront_end
+    100034: RightTrackLever
+    100036: RIghtTrackRear
+    100038: RIghtTrackRear_end
+    100040: Tank
+    100042: //RootNode
+    100044: Turret
     400000: Base
     400002: Cannon
     400004: Cannon_end
     400006: Corps
-    400008: Tank
-    400010: //RootNode
-    400012: Turret
+    400008: Corps.003
+    400010: Corps.005
+    400012: Corps.010
+    400014: Corps.012
+    400016: Left Track
+    400018: LeftTrackFront
+    400020: LeftTrackFront_end
+    400022: LeftTrackLever
+    400024: LeftTrackRear
+    400026: LeftTrackRear_end
+    400028: Right Track
+    400030: RightTrackFront
+    400032: RightTrackFront_end
+    400034: RightTrackLever
+    400036: RIghtTrackRear
+    400038: RIghtTrackRear_end
+    400040: Tank
+    400042: //RootNode
+    400044: Turret
     4300000: Turret
     4300002: Base
+    7400000: Tank|Action
+    7400002: Tank|Idle
+    7400004: Tank|Shapeshift
+    7400006: Tank|Shapeshift.001
+    7400008: Tank|TankAction
     9500000: //RootNode
     13700000: Base
     13700002: Turret
@@ -67,7 +104,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 0
+  importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
