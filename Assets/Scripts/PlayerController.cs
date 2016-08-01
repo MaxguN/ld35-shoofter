@@ -7,14 +7,15 @@ public class PlayerController : MonoBehaviour {
     public Transform m_tank;
     public Transform m_ship;
 	public float m_shiftCooldown = 5f;
+	public float m_forwardSpeed = 50f;
+	public float m_strafeSpeed = 50f;
+	public float m_rotateSpeed = 2f;
 
     private Rigidbody m_rigidbody;
     private Transform m_currentVehicle;
 	private AudioSource m_source;
 	private UserInterface m_ui;
 
-	private float m_speed = 50f;
-	private float m_rotateSpeed = 2f;
 	private float m_mechaTimer = 0f;
 	private float m_shipTimer = 0f;
 	private float m_tankTimer = 0f;
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour {
 	private float m_mechaHP = 0f;
 	private float m_shipHP = 0f;
 	private float m_tankHP = 0f;
+
+	private bool m_shifting = false;
 
 	private int m_score = 0;
 
@@ -76,23 +79,30 @@ public class PlayerController : MonoBehaviour {
 		if (GameObject.FindGameObjectWithTag("Player")) {
 			Vehicle vehicle = GameObject.FindGameObjectWithTag("Player").GetComponent<Vehicle>();
 
-			if (vehicle) {
+			//Debug.Log(GameObject.FindGameObjectWithTag("Player"));
+
+			if (vehicle && !m_shifting) {
 				switch (vehicle.m_vehicle) {
 					case Vehicle.VehicleType.Mech:
-						m_rigidbody.velocity = vehicle.m_rotation * new Vector3(x, 0, z) * m_speed;
+						m_rigidbody.velocity = vehicle.m_rotation * (new Vector3(0, 0, z) * m_forwardSpeed + new Vector3(x, 0, 0) * m_strafeSpeed);
 						Animator animator = vehicle.GetComponent<Animator>();
 						animator.SetBool("Move", x > 0.1f || x < -0.1f || z > 0.1f || z < -0.1f);
 						break;
 					case Vehicle.VehicleType.Ship:
-						m_rigidbody.velocity = vehicle.m_rotation * new Vector3(x, 0, z) * m_speed;
-						vehicle.Lean((int) x);
+						m_rigidbody.velocity = vehicle.m_rotation * (new Vector3(0, 0, z) * m_forwardSpeed + new Vector3(x, 0, 0) * m_strafeSpeed);
+						vehicle.Lean(x);
 						break;
 					case Vehicle.VehicleType.Tank:
+						// ToDo: Decrease speed when tank moving horizontally (use strafeSpeed)
 						transform.localEulerAngles += new Vector3(0, x, 0) * m_rotateSpeed;
-						m_rigidbody.velocity = vehicle.transform.rotation * new Vector3(0, 0, -z) * m_speed;
+						m_rigidbody.velocity = vehicle.transform.rotation * new Vector3(0, 0, -z) * m_forwardSpeed;
 						break;
 				}
+			} else {
+				m_rigidbody.velocity = Vector3.zero;
 			}
+
+			//Debug.Log(m_rigidbody.velocity);
 		}
 
 
@@ -103,7 +113,9 @@ public class PlayerController : MonoBehaviour {
 			Stop();
 		}
 
-		m_currentVehicle.GetComponent<Weapon>().Shoot(fire, GetComponent<MouseTargeting>().GetDirection());
+		if (!m_shifting) {
+			m_currentVehicle.GetComponent<Weapon>().Shoot(fire, GetComponent<MouseTargeting>().GetDirection());
+		}
     }
 
     void Shift(Transform newVehicle, float health) {
@@ -111,6 +123,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	IEnumerator TimedShift(Transform newVehicle, float health) {
+		Animator animator;
+
 		if (m_currentVehicle) {
 			if (m_currentVehicle.name.Contains("mecha")) {
 				m_mechaHP = m_currentVehicle.GetComponent<Health>().GetHealth();
@@ -120,12 +134,17 @@ public class PlayerController : MonoBehaviour {
 				m_tankHP = m_currentVehicle.GetComponent<Health>().GetHealth();
 			}
 
-			Animator animator = m_currentVehicle.GetComponent<Animator>();
+			animator = m_currentVehicle.GetComponent<Animator>();
 			if (animator) {
 				animator.SetTrigger("Shapeshift");
-				yield return new WaitForSeconds(1);
+				m_shifting = true;
+				while (!animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Base Layer")).IsName("Shapeshift Out")) yield return new WaitForSeconds(0.01f);
+				yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Base Layer")).length);
+				m_shifting = false;
+				Debug.Log("Shift out over");
 			}
 
+			animator = null;
 
 			Destroy(m_currentVehicle.gameObject);
 		}
@@ -143,7 +162,14 @@ public class PlayerController : MonoBehaviour {
 			Camera.main.GetComponent<CameraTracking>().GroundTrack();
 		}
 
-		// ToDo : shift animation
+		animator = m_currentVehicle.GetComponent<Animator>();
+		if (animator) {
+			m_shifting = true;
+			while (!animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Base Layer")).IsName("Shapeshift In")) yield return new WaitForSeconds(0.01f);
+			yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(animator.GetLayerIndex("Base Layer")).length);
+			m_shifting = false;
+			Debug.Log("Shift in over");
+		}
 	}
 
 	bool ShiftToMecha() {

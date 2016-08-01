@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: f4955c6825f87a54e9d7d0058fc9aa80
-timeCreated: 1468267952
+guid: 60817f5ab0079f94098471d3774fefdf
+timeCreated: 1469044882
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -53,11 +53,9 @@ ModelImporter:
     400044: Turret
     4300000: Turret
     4300002: Base
-    7400000: Tank|Action
-    7400002: Tank|Idle
-    7400004: Tank|Shapeshift
-    7400006: Tank|Shapeshift.001
-    7400008: Tank|TankAction
+    7400000: Tank|Idle
+    7400002: Tank|Shapeshift
+    7400004: Tank|Shapeshift.001
     9500000: //RootNode
     13700000: Base
     13700002: Turret

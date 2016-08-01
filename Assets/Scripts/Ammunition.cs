@@ -5,7 +5,7 @@ public class Ammunition : MonoBehaviour {
 	public float m_damage = 50f;
 	public float m_velocity = 50f;
 	public float m_lifetime = 30f;
-	public string m_originTag;
+	public string[] m_originTag;
 	public AudioClip m_explosionSound;
 
 	private Rigidbody m_rigidbody;
@@ -27,7 +27,13 @@ public class Ammunition : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.tag == m_originTag || other.tag == "LaserPlane") {
+		foreach (string tag in m_originTag) {
+			if (tag == other.tag) {
+				return;
+			}
+		}
+
+		if (other.tag == "LaserPlane") {
 			return;
 		}
 

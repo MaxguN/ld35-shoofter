@@ -15,7 +15,7 @@ public class MouseTargeting : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-		Cursor.SetCursor(m_cursor, Vector2.zero, CursorMode.Auto);
+		Cursor.SetCursor(m_cursor, new Vector2(m_cursor.width / 2, m_cursor.height / 2), CursorMode.Auto);
 		//Cursor.visible = false;
 		GroundControl();
 		m_currentDirection = Vector3.forward;
@@ -30,22 +30,26 @@ public class MouseTargeting : MonoBehaviour {
 
 		if (Physics.Raycast(cursorRay, out hit, Mathf.Infinity, currentLayer)) {
 			targetPosition = hit.point;
-			//targetPosition.x += 1.5f;
-			//targetPosition.z -= 3f;
+		}
+
+		GameObject vehicle = GameObject.FindGameObjectWithTag("Player");
+		GameObject lasersight = GameObject.FindGameObjectWithTag("LaserSight");
+
+		if (lasersight) {
+			height = lasersight.transform.position.y;
 		}
 
 		playerPosition.y = height;
+		targetPosition.y = height;
 
 		m_currentDirection = targetPosition - playerPosition;
 		m_currentDirection.Normalize();
 
-		if (GameObject.FindGameObjectWithTag("Player") && GameObject.FindGameObjectWithTag("Player").GetComponent<Vehicle>()) {
-			GameObject.FindGameObjectWithTag("Player").GetComponent<Vehicle>().SetOrientation(m_currentDirection);
+		if (vehicle && vehicle.GetComponent<Vehicle>()) {
+			vehicle.GetComponent<Vehicle>().SetOrientation(m_currentDirection);
 		}
-		//Debug.Log(targetPosition + " - " + playerPosition + " = " + direction);
 
 		m_laser.SetPosition(0, playerPosition);
-
 
 		if (Physics.Raycast(playerPosition, m_currentDirection, out hit)) {
 			m_laser.SetPosition(1, hit.point);

@@ -5,30 +5,34 @@ public class EnnemyAI : MonoBehaviour {
 	public float m_speed = 25f;
 	public string m_type;
 
-	private Transform m_target;
+	private Vector3 m_target;
 	private Rigidbody m_rigidbody;
 	// Use this for initialization
 	void Start () {
-		m_target = GameObject.FindGameObjectWithTag("PlayerPosition").transform;
+		m_target = Vector3.zero;
 		m_rigidbody = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		float distance_z = transform.localPosition.z - m_target.localPosition.z;
+		if (GameObject.FindGameObjectWithTag("LaserSight")) {
+			m_target = GameObject.FindGameObjectWithTag("LaserSight").transform.position;
 
-		if (distance_z > 200) {
-			Move();
-		} else {
-			Stop();
-		}
+			float distance_z = transform.localPosition.z - m_target.z;
 
-		if (distance_z < 500 && distance_z > 0) {
-			Shoot();
-		}
+			if (distance_z > 200) {
+				Move();
+			} else {
+				Stop();
+			}
 
-		if (distance_z < -100) {
-			Destroy(gameObject);
+			if (distance_z < 500 && distance_z > 0) {
+				Shoot();
+			}
+
+			if (distance_z < -100) {
+				Destroy(gameObject);
+			}
 		}
 	}
 
@@ -41,16 +45,12 @@ public class EnnemyAI : MonoBehaviour {
 	}
 
 	void Shoot() {
-		Vector3 target = m_target.localPosition;
-		if (m_target.GetComponent<PlayerController>().GetVehicleType() == "Ground") {
-			target.y = 6f;
-		} else {
-			target.y = 20f;
+		if (GameObject.FindGameObjectWithTag("LaserSight")) {
+			Vector3 direction = transform.localPosition - m_target;
+
+			direction.Normalize();
+
+			GetComponent<Weapon>().Shoot(direction);
 		}
-
-		Vector3 direction = transform.localPosition - target;
-		direction.Normalize();
-
-		GetComponent<Weapon>().Shoot(direction);
 	}
 }

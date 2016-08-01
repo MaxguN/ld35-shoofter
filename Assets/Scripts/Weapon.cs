@@ -7,11 +7,12 @@ public class Weapon : MonoBehaviour {
 	public AudioClip m_shootSound;
 	public float m_cooldown = 1f;
 
-	private float m_timer = 0f;
+	private float m_timer;
 	private AudioSource m_source;
 
 	// Use this for initialization
 	void Start () {
+		m_timer = m_cooldown;
 		m_source = GetComponent<AudioSource>();
 		if (m_shootSound) {
 			m_source.clip = m_shootSound;
@@ -27,12 +28,16 @@ public class Weapon : MonoBehaviour {
 		if (fire) {
 			Shoot(new Vector3(0, 0, 1f));
 		}
+
+		m_timer += Time.deltaTime;
 	}
 
 	public void Shoot(bool fire, Vector3 direction) {
 		if (fire) {
 			Shoot(direction);
 		}
+
+		m_timer += Time.deltaTime;
 	}
 
 	public void Shoot(Vector3 direction) {
@@ -53,7 +58,5 @@ public class Weapon : MonoBehaviour {
 				m_source.Play();
 			}
 		}
-
-		m_timer += Time.deltaTime;
 	}
 }
